@@ -21,7 +21,7 @@
             <tr style=" border: black 1px solid">
             <th style=" border: black 1px solid"> ${elemento.nombre}</th>
             <th style=" border: black 1px solid"> ${elemento.descripcion}</th>
-            <th style=" border: black 1px solid"> ${elemento.cantidadRegistrados}</th>
+            <th style=" border: black 1px solid"> ${elemento.cantidadRegistados}</th>
             <th style=" border: black 1px solid"> ${elemento.correoOrganizador}</th>
             <button style=" border: black 1px solid"> VER </button>
             <button style=" border: black 1px solid">VER </button>
