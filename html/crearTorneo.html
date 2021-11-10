@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<htmL>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Torneos</title>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <link rel="stylesheet" href="../css/estilo1.css"/>
+
+        <script
+        src="https://kit.fontawesome.com/7e5b2d153f.js"
+        crossorigin="anonymous"
+      ></script>
+    </head>
+    <body>
+
+        <header class="header">
+          <nav class="nav">
+            <a href="../html/index2.html" class="logo nav-link">Logo</a>
+            <ul class="nav-menu">
+                <li class="nav-menu-item">
+                    <a href="../html/perfil.html" class="nav-menu-link nav-link nav-menu-link_active"
+                  >Perfìl</a
+                >
+                  </li>
+                  <li class="nav-menu-item">
+                    <a href="../html/crearTorneo.html" class="nav-menu-link nav-link nav-menu-link_active"
+                  >Crear Torneo</a
+                >
+                  </li>
+              <li class="nav-menu-item">
+                <button class="nav-menu-link nav-link nav-menu-link_active"
+                  id="ahref">Cerrar sesión</button
+                >
+              </li>
+            </ul>
+          </nav>
+        </header>
+        <main class="main">
+            <div class="container">
+              <div class="lds-ring loader" id="loader"><div></div><div></div><div></div><div></div></div>
+              <form>
+                <center>
+                  <h2 style="text-align: center;">Llenar cuidadosamente todos los datos para crear un nuevo torneo</h2>
+                  <BR>
+                  <h3 style="text-align: center;">INFORMACIÓN PERSONAL</h3>
+                 <br>
+                 <a> Nombre <input
+                    type="text"
+                    id="nombreTorneo"
+                    placeholder="Nombre"
+                    class="form-control my-3"
+                  /></a>
+                  
+                  <br>
+                  <br>
+                  <a> Descripción <input
+                    type="text"
+                    id="descripcionTorneo"
+                    placeholder="Descripción"
+                    class="form-control my-3"
+                  /></a>
+                  
+                  <br>
+                  <br>
+                  <a>Participantes <input
+                    type="text"
+                    id="participatesTorneo"
+                    placeholder="Participantes màximos"
+                    class="form-control my-3"
+                  /></a>
+              
+                 
+                  <br>
+                  <br>
+                  <a>Correo Organizador
+                    <input
+                    type="text"
+                    id="correoTorneo"
+                    placeholder="Correo Organizador"
+                    class="form-control my-3"
+                    
+                  />
+                  </a>
+                
+                  <br>  
+                  <br>
+                  <button class="btn btn-info" id="addBtn" onclick="registrarNuevo()">Crear Torneo</button>
+                  
+                </center>
+              </form>
+            </div>
+          </main>
+      
+
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+        
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#config-web-app -->
+        
+        
+      <script>
+     document.getElementById('ahref').addEventListener('click', function(e){
+            e.preventDefault();
+            
+            firebase
+.auth()
+.signOut()
+.then(()=> {
+  alert("La sesión fue cerrada")
+})
+.then(()=>{
+    window.location="../html/index.html"
+})
+.catch(function (error) {
+  alert("F");
+});
+
+            
+        })
+      </script>
+      <script>
+        firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+          
+      } else{
+         
+              window.location.href = "../html/index.html";
+      }
+    });
+    
+          
+      </script>
+      <script>
+          function registrarNuevo(){
+    var nombreTorneoN = document.getElementById('nombreTorneo').value;
+    var descripcionTorneoN=document.getElementById('descripcionTorneo').value;
+    var participantesN=document.getElementById('participatesTorneo').value;
+    var correoTorneoN=document.getElementById('correoTorneo').value;
+    var aleatorio = Math.round(Math.random()*100).toString();
+
+    var aleatorioUID = nombreTorneoN+aleatorio;
+    console.log(aleatorioUID);
+  return database.ref("Torneos/" +aleatorioUID).set({
+    cantidadRegistados: participantesN,
+    correoOrganizador:correoTorneoN,
+    descripcion:descripcionTorneoN,
+    nombre: nombreTorneoN,
+    uid: aleatorioUID
+  });
+  }
+
+      </script>
+      <script src="../js/index.js"></script>
+
+      </body>
+</htmL>
