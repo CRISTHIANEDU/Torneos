@@ -16,10 +16,9 @@
     </head>
     <body>
       <div id="vent" class="ventana">
-        <div id="cerrar"><a href="javascript:cerrar()"> <img class="imgCerrar"src="../imagenes/close.png"></a>
+        <div id="cerrar"><a href="javascript:cerrar()"><img class="imgCerrar"src="../imagenes/close.png"></a>
         BIENVENIDOS, ESTA ES LA INFORMACIÓN DEL TORNEO, PUEDES INSCRIBIRTE CUANDO QUIERAS :D
         <br>
-        
       <br>
    <div>
     <P>NOMBRE TORNEO</P> 
@@ -63,7 +62,6 @@
         <br>
         <br>
   </div>    
-  
     <p>Lista de Inscritos</p>   
     <div style="text-align:center;">
     <table id="tabla-exportar2" style="margin: 0 auto;">
@@ -77,14 +75,32 @@
       </tbody>
   </table>
   </div>
-        
-     
-
-
-  
     </div>
   </div>
-
+  <div id="vent2" class="ventana2">
+    <div id="cerrar"><a href="javascript:cerrar()"> <img class="imgCerrar"src="../imagenes/close.png"></a>
+    BIENVENIDOS, ESTA ES LA INFORMACIÓN DE LAS POSICIONES ACTUALES :D
+    <br>
+    
+  <br>
+<div>
+<p>Lista de Posiciones</p>   
+<div style="text-align:center;">
+<table id="tabla-exportar2" style="margin: 0 auto;">
+  <thead>
+      <tr >
+          <th style=" border: black 1px solid" scope="col">Posición</th>
+          <th  style=" border: black 1px solid" scope="col">Nombres</th>
+          <th style=" border: black 1px solid" scope="col">Correo</th>
+      </tr>
+  </thead>
+  <tbody style=" border: black 1px solid" id="tablapersonalizada3">
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>  
         <header class="header">
           <nav class="nav">
             <a href="#" class="logo nav-link">Logo</a>
@@ -171,13 +187,13 @@
             var uid=elemento.uid;
             html +=`
             <tr style=" border: black 1px solid">
-            <th style=" border: black 1px solid"> ${elemento.nombre}</th>
-            <th style=" border: black 1px solid"> ${elemento.descripcion}</th>
-            <th style=" border: black 1px solid"> ${elemento.cantidadRegistados}</th>
-            <th style=" border: black 1px solid"> ${elemento.correoOrganizador}</th>
-            <th style=" border: black 1px solid"> <button> VER </button></th>
-            <th style=" border: black 1px solid"> <button> VER </button></th>
-            <th style=" border: black 1px solid"> <button onclick="inscribirTorneo('${uid}')"> INSCRÍBETE </button></th>
+            <th style=" border: black 1px solid">${elemento.nombre}</th>
+            <th style=" border: black 1px solid">${elemento.descripcion}</th>
+            <th style=" border: black 1px solid">${elemento.cantidadRegistados}</th>
+            <th style=" border: black 1px solid">${elemento.correoOrganizador}</th>
+            <th style=" border: black 1px solid"><button> VER </button></th>
+            <th style=" border: black 1px solid"><button onclick="verPosiciones('${uid}')"> VER </button></th>
+            <th style=" border: black 1px solid"><button onclick="inscribirTorneo('${uid}')"> INSCRÍBETE </button></th>
             
             </tr>
             `
@@ -255,6 +271,57 @@ function cerrar(){
   padre.removeChild(ide);
 }
       </script>
+
+         <script>
+          function verPosiciones(uid){
+            document.getElementById("vent2").style.display="block";
+            crearnodoP(uid);
+            llenarParticipantesPosiciones(uid);
+            firebase.database().ref('/Torneos/')
+  .on('value', function(snapshot){
+  })}
+
+          function crearnodoP(uid){
+          var identificador= document.createElement("p");
+          identificador.setAttribute("id", "ide")
+          var contenido=document.createTextNode(uid);
+          identificador.appendChild(contenido);
+          var tex=document.getElementById("vent2");
+         tex.appendChild(identificador);
+        }
+  
+  function cerrar(){
+    document.getElementById("vent").style.display="none"
+    var ide=document.getElementById("ide")
+    var padre=document.getElementById("vent")
+    padre.removeChild(ide);
+  }
+        </script>
+        <script>
+                  function llenarParticipantesPosiciones(uid){
+        firebase.database().ref('/Torneos/'+uid+'/Inscritos/')
+    .on('value', function(snapshot){
+        var html="";
+        var num=1;
+        var tablap= document.getElementById("tablapersonalizada3");
+        snapshot.forEach(function(e){
+            var elemento=e.val();
+            var uid=elemento.uid;
+            
+            html +=`
+            <tr style=" border: black 1px solid">
+              <th style=" border: black 1px solid"> ${num}</th>
+            <th style=" border: black 1px solid"> ${elemento.nombreUsuario}</th>
+            <th style=" border: black 1px solid"> ${elemento.emailUsuario}</th>           
+            </tr>
+            `
+            num=num+1;
+        })
+       
+        tablap.innerHTML=html;
+    })
+        }
+        </script>
       <script>
         function llenarParticipantes(uid){
         firebase.database().ref('/Torneos/'+uid+'/Inscritos/')

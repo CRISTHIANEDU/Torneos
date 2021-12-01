@@ -200,6 +200,23 @@
   display: none;
 
 }
+.ventana2{
+  background: blue;
+  width :1000px;
+  height: 1200px;
+  color:white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  text-align: center;
+  padding: 33px;
+  min-height: 250px;
+  border-radius: 22px;
+  position: absolute;
+  left: 25%;
+  top: 35%;
+  display: none;
+
+}
 .ventana1{
   background: gray;
   width :100px;
